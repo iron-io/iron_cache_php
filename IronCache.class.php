@@ -133,7 +133,7 @@ class IronCache extends IronCore{
     * - api_version
     * @param string|null $cache_name set default cache name
     */
-    function __construct($config_file_or_options, $cache_name = null){
+    function __construct($config_file_or_options = null, $cache_name = null){
         $this->getConfigData($config_file_or_options);
         $this->url = "{$this->protocol}://{$this->host}:{$this->port}/{$this->api_version}/";
         $this->setCacheName($cache_name);
@@ -199,7 +199,7 @@ class IronCache extends IronCore{
      * $cache->postItem("test_cache", 'default', "Hello world");
      * </code>
      * <code>
-     * $cache->postItem("test_cache", 'default', array(
+     * $cache->putItem("test_cache", 'default', array(
      *   "value" => "Test Item",
      *   'expires_in' => 2*24*3600, # 2 days
      *   "replace" => true
@@ -330,9 +330,6 @@ class IronCache extends IronCore{
      * @throws InvalidArgumentException
      */
     public function increment($key, $amount = 1){
-        if (empty($this->cache_name)){
-            throw new InvalidArgumentException("Please set cache_name");
-        }
         return $this->incrementItem($this->cache_name, $key, $amount);
     }
 

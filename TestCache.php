@@ -3,7 +3,7 @@
 include("../iron_core_php/IronCore.class.php");
 include("IronCache.class.php");
 
-$cache = new IronCache('config.ini');
+$cache = new IronCache();
 $cache->ssl_verifypeer = false;
 #$cache->debug_enabled = true;
 $cache->setCacheName('cache #1');
