@@ -27,6 +27,6 @@ echo "\ndone - ".(round(filesize('iron_cache.phar')/1024,2))." KB\n";
 
 # Verification
 require "phar://iron_cache.phar";
-$cache = new IronCache('config.ini');
+$cache = new IronCache();
 
 echo "Build finished successfully\n";
