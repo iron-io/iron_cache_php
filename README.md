@@ -103,3 +103,15 @@ Select cache before interacting with items
 * In constructor: `$cache = new IronCache('config.ini', 'my_cache');`
 * By method: `$cache->setCacheName('my_cache');`
 * Do it later when you need: `$cache->getItem('my_cache','my_key');`
+
+Troubleshooting
+===============
+
+### http error: 0
+
+If you see  `Uncaught exception 'Http_Exception' with message 'http error: 0 | '`
+it most likely caused by misconfigured cURL https sertificates.
+There are two ways to fix this error:
+
+  1) Disable SSL sertificate verification - add this line after IronCache initialization: `$cache->ssl_verifypeer = false;`
+  2) Switch to http protocol - add this to configuration options: `protocol = http` and `port = 80`
