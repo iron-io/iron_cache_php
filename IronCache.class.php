@@ -196,7 +196,7 @@ class IronCache extends IronCore{
      *
      * Examples:
      * <code>
-     * $cache->postItem("test_cache", 'default', "Hello world");
+     * $cache->putItem("test_cache", 'default', "Hello world");
      * </code>
      * <code>
      * $cache->putItem("test_cache", 'default', array(
@@ -296,7 +296,7 @@ class IronCache extends IronCore{
     }
 
     /**
-     * Shortcut for postItem($cache, $key, $item)
+     * Shortcut for putItem($cache, $key, $item)
      * Please set $cache name before use by setCacheName() method
      *
      * @param string $key
