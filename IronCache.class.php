@@ -5,7 +5,7 @@
  * @link https://github.com/iron-io/iron_cache_php
  * @link http://www.iron.io/products/cache
  * @link http://dev.iron.io/
- * @version 0.0.1
+ * @version 0.0.2
  * @package IronCache
  * @copyright Feel free to copy, steal, take credit for, or whatever you feel like doing with this code. ;)
  */
@@ -106,7 +106,7 @@ class IronCache_Item {
 }
 
 class IronCache extends IronCore{
-    protected $client_version = '0.0.1';
+    protected $client_version = '0.0.2';
     protected $client_name    = 'iron_cache_php';
     protected $product_name   = 'iron_cache';
     protected $default_values = array(
