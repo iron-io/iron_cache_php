@@ -5,7 +5,7 @@
  * @link https://github.com/iron-io/iron_cache_php
  * @link http://www.iron.io/products/cache
  * @link http://dev.iron.io/
- * @version 0.0.2
+ * @version 0.1.0
  * @package IronCache
  * @copyright Feel free to copy, steal, take credit for, or whatever you feel like doing with this code. ;)
  */
@@ -106,7 +106,7 @@ class IronCache_Item {
 }
 
 class IronCache extends IronCore{
-    protected $client_version = '0.0.2';
+    protected $client_version = '0.1.0';
     protected $client_name    = 'iron_cache_php';
     protected $product_name   = 'iron_cache';
     protected $default_values = array(
@@ -117,6 +117,8 @@ class IronCache extends IronCore{
     );
 
     private $cache_name;
+
+    public $session_expire_time = 172800; # 2 days
 
     /**
     * @param string|array $config_file_or_options
@@ -332,6 +334,65 @@ class IronCache extends IronCore{
     public function increment($key, $amount = 1){
         return $this->incrementItem($this->cache_name, $key, $amount);
     }
+
+
+    function session_open($savePath, $sessionName){
+       $this->setCacheName($sessionName);
+       return true;
+    }
+
+    function session_close(){
+       return true;
+    }
+
+    function session_read($id){
+        $item = $this->get($id);
+        if ($item !== null) {
+          return $item->value;
+        } else {
+          return null;
+        }
+    }
+
+    function session_write($id, $data){
+        $this->put($id, array(
+            "value" => $data,
+            "expires_in" => $this->session_expire_time
+        ));
+        return true;
+    }
+
+    function session_destroy($id){
+        try {
+            $this->delete($id);
+        } catch (Exception $e) {}
+        return true;
+    }
+
+    function session_gc($maxlifetime){
+        # auto-expire by default, no need for gc
+        return true;
+    }
+
+    /**
+     * Set IronCache as session store handler
+     *
+     * @param null|integer $session_expire_time Expire time in seconds
+     */
+    function set_as_session_store($session_expire_time = null){
+        if ($session_expire_time != null){
+            $this->session_expire_time = $session_expire_time;
+        }
+        session_set_save_handler(
+          array($this, 'session_open'),
+          array($this, 'session_close'),
+          array($this, 'session_read'),
+          array($this, 'session_write'),
+          array($this, 'session_destroy'),
+          array($this, 'session_gc')
+        );
+    }
+
 
     /* PRIVATE FUNCTIONS */
 

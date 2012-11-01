@@ -104,6 +104,22 @@ Select cache before interacting with items
 * By method: `$cache->setCacheName('my_cache');`
 * Do it later when you need: `$cache->getItem('my_cache','my_key');`
 
+
+Using IronCache as session store
+===============
+
+
+```php
+<?php
+$cache = new IronCache();
+$cache->set_as_session_store();
+
+# Use session as usual
+session_start();
+...
+
+```
+
 Troubleshooting
 ===============
 
