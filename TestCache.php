@@ -1,36 +1,44 @@
 <?php
 
-include("../iron_core_php/IronCore.class.php");
-include("IronCache.class.php");
+#require "iron_cache.phar";
+require("../iron_core_php/IronCore.class.php");
+require("IronCache.class.php");
 
 $cache = new IronCache();
 $cache->ssl_verifypeer = false;
 #$cache->debug_enabled = true;
-$cache->setCacheName('cache #1');
-$key = "key #1";
+$cache->setCacheName('cache #4');
 
-echo "Put item on cache:";
-$res = $cache->put($key, 777);
-print_r($res);
 
-echo "\nGet item from cache:";
-$item = $cache->get($key);
-print_r($item);
+for ($i = 0; $i < 10; $i++){
+    $key = "key ##$i";
 
-echo "Increment item on cache:";
-$res = $cache->increment($key, -222);
-print_r($res);
+    echo "Put item on cache:\n";
+    $res = $cache->put($key, 777);
+    var_dump($res);
 
-echo "\nGet item from cache:";
-$item = $cache->get($key);
-print_r($item);
+    echo "\nGet item from cache:\n";
+    $item = $cache->get($key);
+    var_dump($item);
 
-echo "\nRemoving item from cache:";
-$res = $cache->delete($key);
-print_r($res);
+    echo "Increment item on cache:\n";
+    $res = $cache->increment($key, -222);
+    var_dump($res);
 
-echo "\nGet item from cache:";
-$item = $cache->get($key);
-var_dump($item);
+    echo "\nGet item from cache:\n";
+    $item = $cache->get($key);
+    var_dump($item);
 
-echo "\nEnd\n";
+    echo "\nRemoving item from cache:\n";
+    $res = $cache->delete($key);
+    var_dump($res);
+
+    echo "\nGet item from cache:\n";
+    $item = $cache->get($key);
+    var_dump($item);
+
+    echo "----$i----\n";
+}
+
+
+echo "\n done";
