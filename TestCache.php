@@ -37,6 +37,11 @@ for ($i = 0; $i < 10; $i++){
     $item = $cache->get($key);
     var_dump($item);
 
+    echo "\nClear cache:\n";
+    $res = $cache->clear();
+    var_dump($res);
+
+
     echo "----$i----\n";
 }
 
