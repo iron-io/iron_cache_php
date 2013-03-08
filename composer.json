@@ -2,7 +2,7 @@
     "name": "iron-io/iron_cache",
     "type": "library",
     "description": "Client binding for IronCache (A key/value store in the cloud)",
-    "keywords": ["cache","iron_cache","iron","store"],
+    "keywords": ["cache","iron_cache","iron","store","cloud storage"],
     "homepage": "http://github.com/iron-io/iron_cache_php",
     "license": "MIT",
     "authors": [
@@ -14,10 +14,11 @@
         }
     ],
     "require": {
-        "php": ">=5.2.0"
+        "php": ">=5.2.0",
+        "iron-io/iron_core": "*"
     },
     "autoload": {
-        "files": ["iron_cache.phar"]
+        "files": ["IronCache.class.php"]
     },
     "repositories":[
         {
