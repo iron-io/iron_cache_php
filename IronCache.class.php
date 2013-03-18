@@ -105,7 +105,7 @@ class IronCache_Item {
     }
 }
 
-class IronCache extends IronCore{
+class IronCache extends IronCore {
     protected $client_version = '0.1.2';
     protected $client_name    = 'iron_cache_php';
     protected $product_name   = 'iron_cache';
