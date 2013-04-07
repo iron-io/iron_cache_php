@@ -50,7 +50,7 @@ class IronCache_Item {
     }
 
     public function setValue($value) {
-        if(empty($value)) {
+        if(empty($value) && $value != "0") {
             throw new InvalidArgumentException("Please specify a value");
         } else {
             $this->value = $value;
