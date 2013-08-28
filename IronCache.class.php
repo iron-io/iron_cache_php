@@ -12,10 +12,10 @@
 
 
 class IronCache_Item {
-    private $value;
-    private $expires_in;
-    private $replace;
-    private $add;
+    protected $value;
+    protected $expires_in;
+    protected $replace;
+    protected $add;
 
     const max_expires_in = 2592000;
 
@@ -116,7 +116,7 @@ class IronCache extends IronCore {
         'api_version' => '1',
     );
 
-    private $cache_name;
+    protected $cache_name;
 
     public $session_expire_time = 172800; # 2 days
 
@@ -414,14 +414,14 @@ class IronCache extends IronCore {
 
     /* PRIVATE FUNCTIONS */
 
-    private static function encodeCache($cache){
+    protected static function encodeCache($cache){
         if (empty($cache)){
             throw new InvalidArgumentException('Please set $cache variable');
         }
         return rawurlencode($cache);
     }
 
-    private static function encodeKey($key){
+    protected static function encodeKey($key){
         if (empty($key)){
             throw new InvalidArgumentException('Please set $key variable');
         }
@@ -429,11 +429,11 @@ class IronCache extends IronCore {
     }
 
 
-    private function setJsonHeaders(){
+    protected function setJsonHeaders(){
         $this->setCommonHeaders();
     }
 
-    private function setPostHeaders(){
+    protected function setPostHeaders(){
         $this->setCommonHeaders();
         $this->headers['Content-Type'] ='multipart/form-data';
     }
