@@ -10,7 +10,7 @@ $cache->ssl_verifypeer = false;
 $cache->setCacheName('cache #4');
 
 
-for ($i = 0; $i < 10; $i++){
+for ($i = 0; $i < 10; $i++) {
     $key = "key ##$i";
 
     echo "Put item on cache:\n";
