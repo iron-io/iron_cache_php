@@ -33,17 +33,17 @@ class IronCache_Item {
      * - add:     boolean - Will only work if key does not exist.
      */
     function __construct($item) {
-        if(is_string($item) || is_integer($item)) {
+        if (is_string($item) || is_integer($item)) {
             $this->setValue($item);
-        } elseif(is_array($item)) {
+        } elseif (is_array($item)) {
             $this->setValue($item['value']);
-            if(array_key_exists("replace", $item)) {
+            if (array_key_exists("replace", $item)) {
                 $this->setReplace($item['replace']);
             }
-            if(array_key_exists("add", $item)) {
+            if (array_key_exists("add", $item)) {
                 $this->setAdd($item['add']);
             }
-            if(array_key_exists("expires_in", $item)) {
+            if (array_key_exists("expires_in", $item)) {
                 $this->setExpiresIn($item['expires_in']);
             }
         }
@@ -78,27 +78,27 @@ class IronCache_Item {
     }
 
     public function setExpiresIn($expires_in) {
-        if($expires_in > self::max_expires_in) {
+        if ($expires_in > self::max_expires_in) {
             throw new InvalidArgumentException("Expires In can't be greater than ".self::max_expires_in.".");
         } else {
             $this->expires_in = $expires_in;
         }
     }
 
-    public function getExpiresIn(){
+    public function getExpiresIn() {
         return $this->expires_in;
     }
 
     public function asArray() {
         $array = array();
         $array['value'] = $this->getValue();
-        if($this->getExpiresIn() != null) {
+        if ($this->getExpiresIn() != null) {
             $array['expires_in'] = $this->getExpiresIn();
         }
-        if($this->getReplace() != null) {
+        if ($this->getReplace() != null) {
             $array['replace'] = $this->getReplace();
         }
-        if($this->getAdd() != null) {
+        if ($this->getAdd() != null) {
             $array['add'] = $this->getAdd();
         }
         return $array;
@@ -135,7 +135,7 @@ class IronCache extends IronCore {
     * - api_version
     * @param string|null $cache_name set default cache name
     */
-    function __construct($config_file_or_options = null, $cache_name = null){
+    function __construct($config_file_or_options = null, $cache_name = null) {
         $this->getConfigData($config_file_or_options);
         $this->url = "{$this->protocol}://{$this->host}:{$this->port}/{$this->api_version}/";
         $this->setCacheName($cache_name);
@@ -148,10 +148,10 @@ class IronCache extends IronCore {
     * @throws InvalidArgumentException
     */
     public function setProjectId($project_id) {
-        if (!empty($project_id)){
+        if (!empty($project_id)) {
             $this->project_id = $project_id;
         }
-        if (empty($this->project_id)){
+        if (empty($this->project_id)) {
             throw new InvalidArgumentException("Please set project_id");
         }
     }
@@ -163,13 +163,13 @@ class IronCache extends IronCore {
     * @throws InvalidArgumentException
     */
     public function setCacheName($cache_name) {
-        if (!empty($cache_name)){
+        if (!empty($cache_name)) {
             $this->cache_name = $cache_name;
         }
 
     }
 
-    public function getCaches($page = 0){
+    public function getCaches($page = 0) {
         $url = "projects/{$this->project_id}/caches";
         $params = array();
         if($page > 0) {
@@ -217,9 +217,9 @@ class IronCache extends IronCore {
     public function putItem($cache, $key, $item) {
         $cache = self::encodeCache($cache);
         $key   = self::encodeKey($key);
-        $itm = new IronCache_Item($item);
-        $req = $itm->asArray();
-        $url = "projects/{$this->project_id}/caches/$cache/items/$key";
+        $itm   = new IronCache_Item($item);
+        $req   = $itm->asArray();
+        $url   = "projects/{$this->project_id}/caches/$cache/items/$key";
 
         $this->setJsonHeaders();
         $res = $this->apiCall(self::PUT, $url, $req);
@@ -242,10 +242,10 @@ class IronCache extends IronCore {
         $this->setJsonHeaders();
         try {
             $res = $this->apiCall(self::GET, $url);
-        }catch (Http_Exception $e){
+        } catch (Http_Exception $e) {
             if ($e->getCode() == Http_Exception::NOT_FOUND){
                 return null;
-            }else{
+            } else {
                 throw $e;
             }
         }
@@ -273,7 +273,7 @@ class IronCache extends IronCore {
      * @param int $amount Change by this value
      * @return mixed|void
      */
-    public function incrementItem($cache, $key, $amount = 1){
+    public function incrementItem($cache, $key, $amount = 1) {
         $cache = self::encodeCache($cache);
         $key   = self::encodeKey($key);
         $url = "projects/{$this->project_id}/caches/$cache/items/$key/increment";
@@ -293,7 +293,7 @@ class IronCache extends IronCore {
      * @return mixed|null
      * @throws InvalidArgumentException
      */
-    public function get($key){
+    public function get($key) {
         return $this->getItem($this->cache_name, $key);
     }
 
@@ -306,7 +306,7 @@ class IronCache extends IronCore {
      * @return mixed
      * @throws InvalidArgumentException
      */
-    public function put($key, $item){
+    public function put($key, $item) {
         return $this->putItem($this->cache_name, $key, $item);
     }
 
@@ -318,7 +318,7 @@ class IronCache extends IronCore {
      * @return mixed|void
      * @throws InvalidArgumentException
      */
-    public function delete($key){
+    public function delete($key) {
         return $this->deleteItem($this->cache_name, $key);
     }
 
@@ -331,7 +331,7 @@ class IronCache extends IronCore {
      * @return mixed|void
      * @throws InvalidArgumentException
      */
-    public function increment($key, $amount = 1){
+    public function increment($key, $amount = 1) {
         return $this->incrementItem($this->cache_name, $key, $amount);
     }
 
@@ -354,16 +354,16 @@ class IronCache extends IronCore {
     }
 
 
-    function session_open($savePath, $sessionName){
+    function session_open($savePath, $sessionName) {
        $this->setCacheName($sessionName);
        return true;
     }
 
-    function session_close(){
+    function session_close() {
        return true;
     }
 
-    function session_read($id){
+    function session_read($id) {
         $item = $this->get($id);
         if ($item !== null) {
           return $item->value;
@@ -372,7 +372,7 @@ class IronCache extends IronCore {
         }
     }
 
-    function session_write($id, $data){
+    function session_write($id, $data) {
         $this->put($id, array(
             "value" => $data,
             "expires_in" => $this->session_expire_time
@@ -380,14 +380,14 @@ class IronCache extends IronCore {
         return true;
     }
 
-    function session_destroy($id){
+    function session_destroy($id) {
         try {
             $this->delete($id);
         } catch (Exception $e) {}
         return true;
     }
 
-    function session_gc($maxlifetime){
+    function session_gc($maxlifetime) {
         # auto-expire by default, no need for gc
         return true;
     }
@@ -397,8 +397,8 @@ class IronCache extends IronCore {
      *
      * @param null|integer $session_expire_time Expire time in seconds
      */
-    function set_as_session_store($session_expire_time = null){
-        if ($session_expire_time != null){
+    function set_as_session_store($session_expire_time = null) {
+        if ($session_expire_time != null) {
             $this->session_expire_time = $session_expire_time;
         }
         session_set_save_handler(
@@ -414,28 +414,27 @@ class IronCache extends IronCore {
 
     /* PRIVATE FUNCTIONS */
 
-    protected static function encodeCache($cache){
-        if (empty($cache)){
+    protected static function encodeCache($cache) {
+        if (empty($cache)) {
             throw new InvalidArgumentException('Please set $cache variable');
         }
         return rawurlencode($cache);
     }
 
-    protected static function encodeKey($key){
-        if (empty($key)){
+    protected static function encodeKey($key) {
+        if (empty($key)) {
             throw new InvalidArgumentException('Please set $key variable');
         }
         return rawurlencode($key);
     }
 
 
-    protected function setJsonHeaders(){
+    protected function setJsonHeaders() {
         $this->setCommonHeaders();
     }
 
-    protected function setPostHeaders(){
+    protected function setPostHeaders() {
         $this->setCommonHeaders();
         $this->headers['Content-Type'] ='multipart/form-data';
     }
-
 }
