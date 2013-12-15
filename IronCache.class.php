@@ -383,13 +383,13 @@ class IronCache extends IronCore
 
     public function session_open($savePath, $sessionName)
     {
-       $this->setCacheName($sessionName);
-       return true;
+        $this->setCacheName($sessionName);
+        return true;
     }
 
     public function session_close()
     {
-       return true;
+        return true;
     }
 
     public function session_read($id)
@@ -438,12 +438,12 @@ class IronCache extends IronCore
             $this->session_expire_time = $session_expire_time;
         }
         session_set_save_handler(
-          array($this, 'session_open'),
-          array($this, 'session_close'),
-          array($this, 'session_read'),
-          array($this, 'session_write'),
-          array($this, 'session_destroy'),
-          array($this, 'session_gc')
+            array($this, 'session_open'),
+            array($this, 'session_close'),
+            array($this, 'session_read'),
+            array($this, 'session_write'),
+            array($this, 'session_destroy'),
+            array($this, 'session_gc')
         );
     }
 
