@@ -1,4 +1,7 @@
 <?php
+
+use IronCore/IronCore;
+
 /**
  * PHP client for IronCache
  *
