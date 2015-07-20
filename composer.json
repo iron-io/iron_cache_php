@@ -1,29 +1,31 @@
 {
-    "name": "iron-io/iron_cache",
-    "type": "library",
-    "description": "Client binding for IronCache (A key/value store in the cloud)",
-    "keywords": ["cache","iron_cache","iron","store","cloud storage"],
-    "homepage": "http://github.com/iron-io/iron_cache_php",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Alexander S",
-            "email": "alexander@iron.io",
-            "homepage": "http://iron.io",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": ">=5.2.0",
-        "iron-io/iron_core": "0.*"
-    },
-    "autoload": {
-        "files": ["IronCache.class.php"]
-    },
-    "repositories":[
-        {
-            "type":"git",
-            "url":"http://github.com/iron-io/iron_cache_php"
-        }
-    ]
+  "name": "iron-io/iron_cache",
+  "type": "library",
+  "description": "Client binding for IronCache (A key/value store in the cloud)",
+  "keywords": [
+    "cache",
+    "iron_cache",
+    "iron",
+    "store",
+    "cloud storage"
+  ],
+  "homepage": "http://github.com/iron-io/iron_cache_php",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexander S",
+      "email": "alexander@iron.io",
+      "homepage": "http://iron.io",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.2.0",
+    "iron-io/iron_core": "1.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "IronCache\\": "src/"
+    }
+  }
 }

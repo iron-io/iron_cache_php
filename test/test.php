@@ -1,10 +1,8 @@
 <?php
 
-#require "iron_cache.phar";
-require("../iron_core_php/IronCore.class.php");
-require("IronCache.class.php");
+require(dirname(__DIR__) . '/vendor/autoload.php');
 
-$cache = new IronCache();
+$cache = new \IronCache\IronCache();
 $cache->ssl_verifypeer = false;
 #$cache->debug_enabled = true;
 $cache->setCacheName('cache #4');
