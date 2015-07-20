@@ -1,6 +1,1 @@
-*.swp
-config.ini
-.DS_Store
-*.esproj/
-.idea/
-iron.json
+vendor
