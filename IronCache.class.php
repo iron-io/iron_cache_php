@@ -10,7 +10,6 @@
  * @copyright Feel free to copy, steal, take credit for, or whatever you feel like doing with this code. ;)
  */
 
-
 class IronCache_Item
 {
     protected $value;
@@ -89,7 +88,7 @@ class IronCache_Item
     public function setExpiresIn($expires_in)
     {
         if ($expires_in > self::MAX_EXPIRES_IN) {
-            throw new InvalidArgumentException("Expires In can't be greater than ".self::MAX_EXPIRES_IN.".");
+            throw new InvalidArgumentException("Expires In can't be greater than " . self::MAX_EXPIRES_IN . ".");
         } else {
             $this->expires_in = $expires_in;
         }
@@ -134,20 +133,20 @@ class IronCache extends IronCore
     public $session_expire_time = 172800; # 2 days
 
     /**
-    * @param string|array $config
-    *        Array of options or name of config file.
-    * Fields in options array or in config:
-    *
-    * Required:
-    * - token
-    * - project_id
-    * Optional:
-    * - protocol
-    * - host
-    * - port
-    * - api_version
-    * @param string|null $cache_name set default cache name
-    */
+     * @param string|array $config
+     *        Array of options or name of config file.
+     * Fields in options array or in config:
+     *
+     * Required:
+     * - token
+     * - project_id
+     * Optional:
+     * - protocol
+     * - host
+     * - port
+     * - api_version
+     * @param string|null $cache_name set default cache name
+     */
     public function __construct($config = null, $cache_name = null)
     {
         $this->getConfigData($config);
@@ -156,11 +155,11 @@ class IronCache extends IronCore
     }
 
     /**
-    * Switch active project
-    *
-    * @param string $project_id Project ID
-    * @throws InvalidArgumentException
-    */
+     * Switch active project
+     *
+     * @param string $project_id Project ID
+     * @throws InvalidArgumentException
+     */
     public function setProjectId($project_id)
     {
         if (!empty($project_id)) {
@@ -172,11 +171,11 @@ class IronCache extends IronCore
     }
 
     /**
-    * Set default cache name
-    *
-    * @param string $cache_name name of cache
-    * @throws InvalidArgumentException
-    */
+     * Set default cache name
+     *
+     * @param string $cache_name name of cache
+     * @throws InvalidArgumentException
+     */
     public function setCacheName($cache_name)
     {
         if (!empty($cache_name)) {
@@ -197,12 +196,12 @@ class IronCache extends IronCore
     }
 
     /**
-    * Get information about cache.
-    * Also returns cache size.
-    *
-    * @param string $cache
-    * @return mixed
-    */
+     * Get information about cache.
+     * Also returns cache size.
+     *
+     * @param string $cache
+     * @return mixed
+     */
     public function getCache($cache)
     {
         $cache = self::encodeCache($cache);
@@ -235,10 +234,10 @@ class IronCache extends IronCore
     public function putItem($cache, $key, $item)
     {
         $cache = self::encodeCache($cache);
-        $key   = self::encodeKey($key);
-        $itm   = new IronCache_Item($item);
-        $req   = $itm->asArray();
-        $url   = "projects/{$this->project_id}/caches/$cache/items/$key";
+        $key = self::encodeKey($key);
+        $itm = new IronCache_Item($item);
+        $req = $itm->asArray();
+        $url = "projects/{$this->project_id}/caches/$cache/items/$key";
 
         $this->setJsonHeaders();
         $res = $this->apiCall(self::PUT, $url, $req);
@@ -256,8 +255,8 @@ class IronCache extends IronCore
     public function getItem($cache, $key)
     {
         $cache = self::encodeCache($cache);
-        $key   = self::encodeKey($key);
-        $url   = "projects/{$this->project_id}/caches/$cache/items/$key";
+        $key = self::encodeKey($key);
+        $url = "projects/{$this->project_id}/caches/$cache/items/$key";
 
         $this->setJsonHeaders();
         try {
@@ -275,8 +274,8 @@ class IronCache extends IronCore
     public function deleteItem($cache, $key)
     {
         $cache = self::encodeCache($cache);
-        $key   = self::encodeKey($key);
-        $url   = "projects/{$this->project_id}/caches/$cache/items/$key";
+        $key = self::encodeKey($key);
+        $url = "projects/{$this->project_id}/caches/$cache/items/$key";
 
         $this->setJsonHeaders();
         return self::json_decode($this->apiCall(self::DELETE, $url));
@@ -297,15 +296,14 @@ class IronCache extends IronCore
     public function incrementItem($cache, $key, $amount = 1)
     {
         $cache = self::encodeCache($cache);
-        $key   = self::encodeKey($key);
+        $key = self::encodeKey($key);
         $url = "projects/{$this->project_id}/caches/$cache/items/$key/increment";
         $params = array(
-            'amount' => $amount
+            'amount' => $amount,
         );
         $this->setJsonHeaders();
         return self::json_decode($this->apiCall(self::POST, $url, $params));
     }
-
 
     /**
      * Shortcut for getItem($cache, $key)
@@ -380,7 +378,6 @@ class IronCache extends IronCore
         return self::json_decode($this->apiCall(self::POST, $url, $params));
     }
 
-
     public function session_open($savePath, $sessionName)
     {
         $this->setCacheName($sessionName);
@@ -405,8 +402,8 @@ class IronCache extends IronCore
     public function session_write($id, $data)
     {
         $this->put($id, array(
-            "value" => $data,
-            "expires_in" => $this->session_expire_time
+            "value"      => $data,
+            "expires_in" => $this->session_expire_time,
         ));
         return true;
     }
@@ -447,7 +444,6 @@ class IronCache extends IronCore
         );
     }
 
-
     /* PRIVATE FUNCTIONS */
 
     protected static function encodeCache($cache)
@@ -466,7 +462,6 @@ class IronCache extends IronCore
         return rawurlencode($key);
     }
 
-
     protected function setJsonHeaders()
     {
         $this->setCommonHeaders();
@@ -475,6 +470,6 @@ class IronCache extends IronCore
     protected function setPostHeaders()
     {
         $this->setCommonHeaders();
-        $this->headers['Content-Type'] ='multipart/form-data';
+        $this->headers['Content-Type'] = 'multipart/form-data';
     }
 }

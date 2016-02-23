@@ -6,7 +6,7 @@
  * or
  * include("phar://".dirname(__FILE__)."/iron_cache.phar");
  */
- 
+
 @unlink('iron_cache.phar');
 
 $phar = new Phar('iron_cache.phar');
@@ -25,7 +25,7 @@ $phar->addFile('../iron_core_php/IronCore.class.php', 'IronCore.class.php');
 $phar->addFile('IronCache.class.php');
 $phar->addFile('LICENSE', 'LICENSE');
 
-echo "\ndone - ".(round(filesize('iron_cache.phar')/1024, 2))." KB\n";
+echo "\ndone - " . (round(filesize('iron_cache.phar') / 1024, 2)) . " KB\n";
 
 # Verification
 require "phar://iron_cache.phar";
